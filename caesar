@@ -1,0 +1,23 @@
+def caesar_encrypt(text, shift):
+    result = ""
+    for char in text:
+        if char.isalpha():
+            base = 'A' if char.isupper() else 'a'
+            result += chr((ord(char) - ord(base) + shift) % 26 + ord(base))
+        else:
+            result += char
+    return result
+
+def caesar_decrypt(ciphertext, shift):
+    return caesar_encrypt(ciphertext, -shift)
+
+
+# Example use
+text = "Hello World"
+shift = 3
+
+encrypted = caesar_encrypt(text, shift)
+print("Encrypted:", encrypted)
+
+decrypted = caesar_decrypt(encrypted, shift)
+print("Decrypted:", decrypted)
