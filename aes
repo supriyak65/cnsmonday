@@ -1,0 +1,25 @@
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
+from Crypto.Random import get_random_bytes
+
+# ---- User Input ----
+key_input = input("Enter a secret key (16, 24, or 32 characters): ")
+if len(key_input) not in [16, 24, 32]:
+    raise ValueError("Key length must be 16, 24, or 32 characters!")
+key = key_input.encode()
+
+plaintext = input("Enter a message to encrypt: ").encode()
+
+# ---- Encryption ----
+cipher = AES.new(key, AES.MODE_CBC)
+ciphertext = cipher.encrypt(pad(plaintext, AES.block_size))
+iv = cipher.iv
+
+print("\n🔒 Encrypted (bytes):", ciphertext)
+print("🔑 IV (Initialization Vector):", iv)
+
+# ---- Decryption ----
+cipher_dec = AES.new(key, AES.MODE_CBC, iv)
+decrypted = unpad(cipher_dec.decrypt(ciphertext), AES.block_size)
+
+print("\n🔓 Decrypted message:", decrypted.decode())
