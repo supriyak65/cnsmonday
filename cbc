@@ -1,0 +1,19 @@
+from Crypto.Cipher import DES
+from Crypto.Util.Padding import pad, unpad
+from Crypto.Random import get_random_bytes
+
+key = b'12345678'        # DES key must be 8 bytes
+iv = get_random_bytes(8)  # 8-byte IV for CBC mode
+plaintext = b'HELLO WORLD'
+
+# Create DES cipher in CBC mode
+cipher = DES.new(key, DES.MODE_CBC, iv)
+
+# Encrypt
+ciphertext = cipher.encrypt(pad(plaintext, DES.block_size))
+print("Encrypted (hex):", ciphertext.hex())
+
+# Decrypt
+decipher = DES.new(key, DES.MODE_CBC, iv)
+decrypted = unpad(decipher.decrypt(ciphertext), DES.block_size)
+print("Decrypted:", decrypted.decode())
