@@ -1,0 +1,31 @@
+# Diffie–Hellman Key Exchange (Simple Version)
+
+# Step 1: Publicly shared values
+p = int(input("Enter a prime number (p): "))
+g = int(input("Enter a base number (g): "))
+
+# Step 2: Private keys
+a = int(input("Enter Alice's private key: "))
+b = int(input("Enter Bob's private key: "))
+
+# Step 3: Compute public keys
+A = pow(g, a, p)  # (g^a) mod p
+B = pow(g, b, p)  # (g^b) mod p
+
+print("\n--- Public Keys ---")
+print("Alice's Public Key (A):", A)
+print("Bob's Public Key (B):", B)
+
+# Step 4: Compute shared secret keys
+secret_Alice = pow(B, a, p)  # (B^a) mod p
+secret_Bob = pow(A, b, p)    # (A^b) mod p
+
+print("\n--- Shared Secret Keys ---")
+print("Alice's Shared Key:", secret_Alice)
+print("Bob's Shared Key:", secret_Bob)
+
+# Step 5: Verify if both match
+if secret_Alice == secret_Bob:
+    print("\n✅ Key Exchange Successful! Shared Secret Key =", secret_Alice)
+else:
+    print("\n❌ Key Exchange Failed! Keys do not match.")
